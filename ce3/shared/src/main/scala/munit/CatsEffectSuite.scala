@@ -31,6 +31,9 @@ abstract class CatsEffectSuite
 
   implicit def munitIoRuntime: IORuntime = IORuntime.global
 
+  // bincompat
+  private[munit] def ioRuntime = munitIoRuntime
+
   override implicit val munitExecutionContext: ExecutionContext = munitIoRuntime.compute
 
   override def munitValueTransforms: List[ValueTransform] =
