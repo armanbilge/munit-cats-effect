@@ -16,4 +16,10 @@
 
 package munit
 
-trait CatsEffectFixturesPlatform { self: CatsEffectSuite => }
+trait CatsEffectFixtures extends CatsEffectFixturesPlatform { self: CatsEffectSuite =>
+  object UnsafeResourceSuiteLocalDeferredFixture extends UnsafeResourceSuiteLocalDeferredFixture(self)
+}
+
+// bincompat
+private[munit] trait CatsEffectFixturesPlatform { self: CatsEffectSuite =>
+}

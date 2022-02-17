@@ -18,9 +18,20 @@ package munit
 
 import cats.effect.{IO, Resource}
 
-trait CatsEffectFixturesPlatform { self: CatsEffectSuite =>
+trait CatsEffectFixtures extends CatsEffectFixturesPlatform { self: CatsEffectSuite =>
+  object UnsafeResourceSuiteLocalDeferredFixture extends munit.UnsafeResourceSuiteLocalDeferredFixture(self)
 
-  object ResourceSuiteLocalFixture {
+  class ResourceSuiteLocalFixture extends super.ResourceSuiteLocalFixture
+  object ResourceSuiteLocalFixture extends ResourceSuiteLocalFixture
+}
+
+// bincompat
+private[munit] trait CatsEffectFixturesPlatform { self: CatsEffectSuite =>
+
+  private[munit] class UnsafeResourceSuiteLocalDeferredFixture extends munit.UnsafeResourceSuiteLocalDeferredFixture(self)
+
+  private[munit] class `ResourceSuiteLocalFixture$`
+  private[munit] class ResourceSuiteLocalFixture {
 
     final class FixtureNotInstantiatedException(name: String)
         extends Exception(
